@@ -26,7 +26,8 @@ NEXUS_ROOT = os.path.normpath(os.path.dirname(__file__))
 
 class NexusSite(object):
     def __init__(self, name=None, app_name='nexus'):
-        self._registry = {}
+        #self._registry = {}
+        self._registry = SortedDict()
         self._categories = SortedDict()
         if name is None:
             self.name = 'nexus'
@@ -41,6 +42,8 @@ class NexusSite(object):
             self._categories[category] = label
 
     def register(self, module, namespace=None, category=None):
+        if module is None:
+            return
         module = module(self, category)
         if not namespace:
             namespace = module.get_namespace()
